@@ -167,10 +167,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6BA967A921F22CF200DE5331 /* Build configuration list for PBXNativeTarget "textGO" */;
 			buildPhases = (
+				6B09579B2227861D004B6326 /* bartycrouch */,
 				6BA9678121F22CF000DE5331 /* Sources */,
 				6BA9678221F22CF000DE5331 /* Frameworks */,
 				6BA9678321F22CF000DE5331 /* Resources */,
-				6B09579B2227861D004B6326 /* bartycrouch */,
 			);
 			buildRules = (
 			);
