@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6B21FDEB222A0E4A007A5220 /* TextGoUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B21FDEA222A0E4A007A5220 /* TextGoUpdater.swift */; };
 		6B4952FC222220BC0067596F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6B4952FE222220BC0067596F /* InfoPlist.strings */; };
 		6B4953032222297D0067596F /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B4953052222297D0067596F /* SettingsViewController.xib */; };
 		6B49531222222FE60067596F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6B49531422222FE60067596F /* Localizable.strings */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6B21FDEA222A0E4A007A5220 /* TextGoUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextGoUpdater.swift; sourceTree = "<group>"; };
 		6B4952F4222220650067596F /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MainMenu.strings"; sourceTree = "<group>"; };
 		6B4952F52222206F0067596F /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/MainMenu.strings"; sourceTree = "<group>"; };
 		6B4952F6222220740067596F /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/MainMenu.strings; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 				6B4953052222297D0067596F /* SettingsViewController.xib */,
 				6B4952FE222220BC0067596F /* InfoPlist.strings */,
 				6B49531422222FE60067596F /* Localizable.strings */,
+				6B21FDEA222A0E4A007A5220 /* TextGoUpdater.swift */,
 			);
 			path = textGO;
 			sourceTree = "<group>";
@@ -324,6 +327,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B21FDEB222A0E4A007A5220 /* TextGoUpdater.swift in Sources */,
 				6BA9678921F22CF000DE5331 /* AppDelegate.swift in Sources */,
 				6BA967B921F356C000DE5331 /* NSDragingInfoExt.swift in Sources */,
 				6BC33F2121F6D81200C5DAFD /* textGoPublic.swift in Sources */,

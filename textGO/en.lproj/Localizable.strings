@@ -43,3 +43,24 @@
 
 /* app display name: Text Go */
 "app-info-name" = "Text Go";
+
+/* 前往下载 */
+"check-update-tip-get-gobutton.title" = "Download";
+
+/* 忽略 */
+"check-update-tip-get-ignorebutton.title" = "Ignore";
+
+/* 发现新版本 */
+"check-update-tip-get.message" = "Found new version!";
+
+/* 网络异常！ */
+"check-update-tip-network.message" = "Connection Invalid!";
+
+/* 没有更新！ */
+"check-update-tip-none.message" = "No updates!";
+
+/* 检查更新 */
+"check-update-tip.title" = "Check for updates";
+
+/* 菜单栏检查更新按钮标题：检查更新 */
+"menu-item-check-update.title" = "Check for updates";

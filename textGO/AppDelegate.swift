@@ -13,6 +13,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     let baiduAI = BaiduAI()
     let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
+    let updater = TextGoUpdater(user: "smslit") {}
     
     let settingWinC: NSWindowController = NSWindowController(window: NSWindow(contentViewController: SettingsViewController()))
   
@@ -56,6 +57,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItem(.separator())
         menu.addItem(mainDropdown)
         menu.setSubmenu(helpMenu, for: mainDropdown)
+        menu.addItem(withTitle: NSLocalizedString("menu-item-check-update.title", comment: "菜单栏检查更新按钮标题：检查更新"), action: #selector(checkUpdate), keyEquivalent: "u")
         menu.addItem(.separator())
         menu.addItem(withTitle: NSLocalizedString("menu-item-quit.title", comment: "菜单栏退出按钮标题：退出 文析"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         statusItem.menu = menu
@@ -100,6 +102,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @objc func howToUse() {
         NSWorkspace.shared.open(URL(string: "https://www.smslit.top/2019/01/22/textGO/")!)
+    }
+    
+    @objc func checkUpdate() {
+        updater.check()
     }
     
 }

@@ -42,3 +42,24 @@
 
 /* app display name: Text Go */
 "app-info-name" = "Text Go";
+
+/* No comment provided by engineer. */
+"check-update-tip-get-gobutton.title" = "다운로드로 이동";
+
+/* No comment provided by engineer. */
+"check-update-tip-get-ignorebutton.title" = "무시";
+
+/* No comment provided by engineer. */
+"check-update-tip-get.message" = "새 버전을 찾았습니다!";
+
+/* No comment provided by engineer. */
+"check-update-tip-network.message" = "네트워크 이상！";
+
+/* No comment provided by engineer. */
+"check-update-tip-none.message" = "업데이트 없음!";
+
+/* No comment provided by engineer. */
+"check-update-tip.title" = "업데이트 확인";
+
+/* 菜单栏检查更新按钮标题：检查更新 */
+"menu-item-check-update.title" = "업데이트 확인";

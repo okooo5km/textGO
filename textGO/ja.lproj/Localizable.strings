@@ -42,3 +42,24 @@
 
 /* app display name: Text Go */
 "app-info-name" = "Text Go";
+
+/* No comment provided by engineer. */
+"check-update-tip-get-gobutton.title" = "ダウンロードする";
+
+/* No comment provided by engineer. */
+"check-update-tip-get-ignorebutton.title" = "無視する";
+
+/* No comment provided by engineer. */
+"check-update-tip-get.message" = "新バージョンを発見";
+
+/* No comment provided by engineer. */
+"check-update-tip-network.message" = "ネットワーク異常！";
+
+/* No comment provided by engineer. */
+"check-update-tip-none.message" = "更新なし";
+
+/* No comment provided by engineer. */
+"check-update-tip.title" = "更新を確認する";
+
+/* 菜单栏检查更新按钮标题：检查更新 */
+"menu-item-check-update.title" = "更新を確認する";

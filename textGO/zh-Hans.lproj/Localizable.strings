@@ -42,3 +42,24 @@
 
 /* app display name: Text Go */
 "app-info-name" = "文析";
+
+/* 前往下载 */
+"check-update-tip-get-gobutton.title" = "前往下载";
+
+/* 忽略 */
+"check-update-tip-get-ignorebutton.title" = "忽略";
+
+/* 发现新版本 */
+"check-update-tip-get.message" = "发现新版本";
+
+/* 网络异常！ */
+"check-update-tip-network.message" = "网络异常！";
+
+/* 没有更新！ */
+"check-update-tip-none.message" = "没有更新！";
+
+/* 检查更新 */
+"check-update-tip.title" = "检查更新";
+
+/* 菜单栏检查更新按钮标题：检查更新 */
+"menu-item-check-update.title" = "检查更新";
