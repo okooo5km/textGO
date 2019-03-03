@@ -13,7 +13,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     let baiduAI = BaiduAI()
     let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
-    let updater = TextGoUpdater(user: "smslit") {}
+    let updater = TextGoUpdater(user: "smslit")
     
     let settingWinC: NSWindowController = NSWindowController(window: NSWindow(contentViewController: SettingsViewController()))
   
@@ -105,7 +105,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @objc func checkUpdate() {
-        updater.check()
+        updater.check() {}
     }
     
 }
