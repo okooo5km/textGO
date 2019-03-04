@@ -11,6 +11,8 @@ import Cocoa
 
 class BaiduAI {
     
+    static let share = BaiduAI()
+    
     enum ErrorType: Int {
         case accessTokenInvalid = 110   // 无效的 access token
         case connectInvalid = 111       // 连接错误
@@ -25,7 +27,6 @@ class BaiduAI {
     
     private var tryCount: Int = 0
     private var ocrUrl = OcrUrl.accurate
-    var delegate: BaiduAIDelegate!
     private var _baiduParams: [String: String]? = [String: String]()
     var baiduParams: [String: String]? {
         get {
@@ -79,7 +80,7 @@ class BaiduAI {
         accessToken = ""
     }
     
-    func ocr(_ imgData: NSData) {
+    func ocr(_ imgData: NSData, callback: @escaping ((String?, (ErrorType, String)?) -> Void)) {
         
         if accessToken == nil {
             return
@@ -96,22 +97,27 @@ class BaiduAI {
         }).joined(separator: "&")
         request.httpBody = postString.data(using: .utf8)
         let task = session.dataTask(with: request) {(data, response, error) in
+            self.requestCompletionHandler(imgData: imgData, data: data, response: response, error: error, callback: callback)
+        }
+        task.resume()
+    }
+    
+    private func requestCompletionHandler(imgData: NSData, data: Data?, response: URLResponse?, error: Error?, callback: @escaping ((String?, (ErrorType, String)?) -> Void)) {
+        DispatchQueue.main.async {
             do {
                 let r = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
                 if let errorCode = r.value(forKey: "error_code") as? Int {
                     if let errorType = ErrorType(rawValue: errorCode) {
-                        if self.delegate != nil {
-                            self.delegate.ocrError(type: errorType, msg: r.value(forKey: "error_msg") as! String)
-                        }
+                        callback(nil, (errorType, r.value(forKey: "error_msg") as! String))
                         switch (errorType) {
                         case ErrorType.accessTokenInvalid:
                             self.updateAccessToken()
                         case ErrorType.openApiLimited:
                             self.ocrUrl = OcrUrl.basic
-                            self.ocr(imgData)
+                            self.ocr(imgData, callback: callback)
                         case ErrorType.connectInvalid:  // 此时的错误是 Access token expired
                             self.updateAccessToken()
-                            self.ocr(imgData)
+                            self.ocr(imgData, callback: callback)
                         default:
                             print("")
                         }
@@ -126,21 +132,16 @@ class BaiduAI {
                             wordsArray.append(words)
                         }
                         let wordsStr = wordsArray.joined(separator: "\n")
-                        self.delegate.ocrResult(text: wordsStr)
+                        callback(wordsStr, nil)
                     } else {
-                        if self.delegate != nil {
-                            self.delegate.ocrError(type: ErrorType.resultEmpty, msg: "result is empty")
-                        }
+                        callback(nil, (ErrorType.resultEmpty, r.value(forKey: "result is empty") as! String))
                     }
                 }
             } catch {
-                if self.delegate != nil {
-                    self.delegate.ocrError(type: ErrorType.connectInvalid, msg: "can not connect to server")
-                }
+                callback(nil, (ErrorType.connectInvalid, "can not connect to server"))
                 return
             }
         }
-        task.resume()
     }
     
     private func base64From(_ imgData: NSData) -> String? {
@@ -184,11 +185,6 @@ class BaiduAI {
         task.resume()
     }
     
-}
-
-protocol BaiduAIDelegate {
-    func ocrResult(text: String)
-    func ocrError(type: BaiduAI.ErrorType, msg: String)
 }
 
 extension String {

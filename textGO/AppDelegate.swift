@@ -11,7 +11,6 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     
-    let baiduAI = BaiduAI()
     let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
     
     let settingWinC: NSWindowController = NSWindowController(window: NSWindow(contentViewController: SettingsViewController()))
@@ -25,8 +24,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         
         constructMenu()
-        
-        baiduAI.delegate = self
         
         if let win = settingWinC.window {
             win.title = NSLocalizedString("setting-window.title", comment: "设置窗口的标题：偏好设置")
@@ -72,9 +69,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         if (NSPasteboard.general.types?.contains(NSPasteboard.PasteboardType.png))! {
             let imgData = NSPasteboard.general.data(forType: NSPasteboard.PasteboardType.png)
-            baiduAI.ocr(imgData! as NSData)
+            BaiduAI.share.ocr(imgData! as NSData, callback: self.ocrCallBack(result:error:))
         }
-        
     }
     
     @objc func preferencesWindow() {
@@ -125,7 +121,7 @@ extension AppDelegate: NSWindowDelegate, NSDraggingDestination {
         if sender.isImageFile {
             let imgurl = sender.draggedFileURL!.absoluteURL
             let imgData = NSData(contentsOf: imgurl!)
-            baiduAI.ocr(imgData!)
+            BaiduAI.share.ocr(imgData!, callback: self.ocrCallBack(result:error:))
             return true
         }
         return false
@@ -147,16 +143,8 @@ extension AppDelegate: NSWindowDelegate, NSDraggingDestination {
         }
     }
     
-}
-
-extension AppDelegate: BaiduAIDelegate {
-    func ocrError(type: BaiduAI.ErrorType, msg: String) {
-        print(type)
-        print(msg)
-    }
-    func ocrResult(text: String) {
+    private func ocrCallBack(result: String?, error: (BaiduAI.ErrorType, String)?) {
         NSPasteboard.general.declareTypes([.string], owner: nil)
-        NSPasteboard.general.setString(text, forType: .string)
+        NSPasteboard.general.setString(result!, forType: .string)
     }
 }
-
