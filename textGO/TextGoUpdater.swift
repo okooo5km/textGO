@@ -14,6 +14,8 @@ class TextGoUpdater {
     private let url: URL?
     private let user: String
     
+    static let share = TextGoUpdater(user: "smslit")
+    
     init(user: String) {
         self.user = user
         let proName = Bundle.main.infoDictionary!["CFBundleExecutable"]!
