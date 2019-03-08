@@ -63,3 +63,30 @@ extension NSTextField {
         }
     }
 }
+
+// 垂直居中
+class VATextFieldCell: NSTextFieldCell {
+    
+    override func titleRect(forBounds rect: NSRect) -> NSRect {
+        var titleFrame = super.titleRect(forBounds: rect)
+        let titleSize = self.attributedStringValue.size()
+        var lineCount = CGFloat(1)
+        if !usesSingleLineMode {
+            lineCount = CGFloat(Int(titleSize.width / rect.size.width) + 1)
+        } else {
+            titleFrame.size.height = titleSize.height
+        }
+        // 自适应水平居中
+        if titleFrame.width - titleSize.width > 22 {
+            titleFrame.origin.x = rect.origin.x + (rect.size.width - titleSize.width) / 2.0
+        }
+        // 垂直居中
+        titleFrame.origin.y = rect.origin.y + (rect.size.height - titleSize.height * lineCount) / 2.0
+        return titleFrame
+    }
+    
+    override func drawInterior(withFrame cellFrame: NSRect, in controlView: NSView) {
+        let titleRect = self.titleRect(forBounds: cellFrame)
+        self.attributedStringValue.draw(in: titleRect)
+    }
+}

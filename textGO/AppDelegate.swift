@@ -15,6 +15,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     let settingWinC: NSWindowController = NSWindowController(window: NSWindow(contentViewController: SettingsViewController()))
   
+    @IBOutlet weak var resultPopover: NSPopover!
+    
+    var timer: Timer?
+    
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
         if let button = statusItem.button {
@@ -32,6 +36,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             win.titlebarAppearsTransparent = true
             win.styleMask.insert(NSWindow.StyleMask.fullSizeContentView)
         }
+        
+        resultPopover.delegate = self
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -103,6 +109,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         TextGoUpdater.share.check() {}
     }
     
+    private func ocrCallBack(result: String?, error: (BaiduAI.ErrorType, String)?) {
+        NSPasteboard.general.declareTypes([.string], owner: nil)
+        NSPasteboard.general.setString(result!, forType: .string)
+        if let button = statusItem.button {
+            if resultPopover.isShown {
+                resultPopover.performClose(self)
+            }
+            resultPopover.show(relativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.minY)
+            timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { timer in
+                self.resultPopover.performClose(self)
+            }
+        }
+    }
+    
 }
 
 extension AppDelegate: NSWindowDelegate, NSDraggingDestination {
@@ -142,9 +162,15 @@ extension AppDelegate: NSWindowDelegate, NSDraggingDestination {
             button.image = NSImage(named: "statusIcon")
         }
     }
-    
-    private func ocrCallBack(result: String?, error: (BaiduAI.ErrorType, String)?) {
-        NSPasteboard.general.declareTypes([.string], owner: nil)
-        NSPasteboard.general.setString(result!, forType: .string)
+
+}
+
+extension AppDelegate: NSPopoverDelegate {
+    func popoverWillShow(_ notification: Notification) {
+        if let popover = notification.object as? NSPopover {
+            if let vc = popover.contentViewController as? ResultViewController {
+                vc.resultTextField.stringValue = NSPasteboard.general.string(forType: .string)!
+            }
+        }
     }
 }
