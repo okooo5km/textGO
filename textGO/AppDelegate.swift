@@ -118,7 +118,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
             resultPopover.show(relativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.minY)
             timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { timer in
-                self.resultPopover.performClose(self)
+                if self.resultPopover.isShown {
+                    self.resultPopover.performClose(self)
+                }
             }
         }
     }
