@@ -17,7 +17,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   
     @IBOutlet weak var resultPopover: NSPopover!
     
-    var timer: Timer?
+    var ocrImage: NSImage?
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
@@ -75,6 +75,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         if (NSPasteboard.general.types?.contains(NSPasteboard.PasteboardType.png))! {
             let imgData = NSPasteboard.general.data(forType: NSPasteboard.PasteboardType.png)
+            self.ocrImage = NSImage(data: imgData!)
             BaiduAI.share.ocr(imgData! as NSData, callback: self.ocrCallBack(result:error:))
         }
     }
@@ -110,6 +111,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     private func ocrCallBack(result: String?, error: (BaiduAI.ErrorType, String)?) {
+        if let error = error {
+            print(error)
+            return
+        }
         NSPasteboard.general.declareTypes([.string], owner: nil)
         NSPasteboard.general.setString(result!, forType: .string)
         if let button = statusItem.button {
@@ -117,11 +122,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 resultPopover.performClose(self)
             }
             resultPopover.show(relativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.minY)
-            timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { timer in
-                if self.resultPopover.isShown {
-                    self.resultPopover.performClose(self)
-                }
-            }
         }
     }
     
@@ -143,6 +143,7 @@ extension AppDelegate: NSWindowDelegate, NSDraggingDestination {
         if sender.isImageFile {
             let imgurl = sender.draggedFileURL!.absoluteURL
             let imgData = NSData(contentsOf: imgurl!)
+            self.ocrImage = NSImage(data: imgData! as Data)
             BaiduAI.share.ocr(imgData!, callback: self.ocrCallBack(result:error:))
             return true
         }
@@ -169,10 +170,13 @@ extension AppDelegate: NSWindowDelegate, NSDraggingDestination {
 
 extension AppDelegate: NSPopoverDelegate {
     func popoverWillShow(_ notification: Notification) {
-        if let popover = notification.object as? NSPopover {
-            if let vc = popover.contentViewController as? ResultViewController {
-                vc.resultTextField.stringValue = NSPasteboard.general.string(forType: .string)!
-            }
+        guard let popover = notification.object as? NSPopover  else {
+            return
         }
+        guard let vc = popover.contentViewController as? ResultViewController else {
+            return
+        }
+        vc.targetImageView.image = self.ocrImage
+        vc.resultText = NSPasteboard.general.string(forType: .string)
     }
 }

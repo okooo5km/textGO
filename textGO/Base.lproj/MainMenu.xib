@@ -19,7 +19,7 @@
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <viewController id="rMQ-qz-v7X" userLabel="Popover View Controller" customClass="ResultViewController" customModule="textGO" customModuleProvider="target"/>
-        <popover behavior="semitransient" id="jQH-Rn-7qI">
+        <popover behavior="t" id="jQH-Rn-7qI">
             <connections>
                 <outlet property="contentViewController" destination="rMQ-qz-v7X" id="hlH-wA-ewE"/>
             </connections>

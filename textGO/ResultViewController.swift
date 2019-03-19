@@ -10,11 +10,16 @@ import Cocoa
 
 class ResultViewController: NSViewController {
 
-    @IBOutlet weak var resultTextField: NSTextField!
+    var resultText: String?
+    @IBOutlet weak var targetImageView: NSImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
     }
     
+    @IBAction func openResultHandleWindow(_ sender: Any) {
+        // 添加结果处理窗口的弹出
+        print("handle here")
+    }
 }
