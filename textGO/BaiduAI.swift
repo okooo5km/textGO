@@ -108,7 +108,6 @@ class BaiduAI {
                 let r = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
                 if let errorCode = r.value(forKey: "error_code") as? Int {
                     if let errorType = ErrorType(rawValue: errorCode) {
-                        callback(nil, (errorType, r.value(forKey: "error_msg") as! String))
                         switch (errorType) {
                         case ErrorType.accessTokenInvalid:
                             self.updateAccessToken()
@@ -121,6 +120,7 @@ class BaiduAI {
                         default:
                             print("")
                         }
+                        callback(nil, (errorType, r.value(forKey: "error_msg") as! String))
                     } else {
                         print(r)
                     }
