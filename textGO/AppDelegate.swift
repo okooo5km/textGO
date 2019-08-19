@@ -13,10 +13,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
     
-    let settingWinC: NSWindowController = NSWindowController(window: NSWindow(contentViewController: SettingsViewController()))
-  
-    @IBOutlet weak var resultPopover: NSPopover!
-    
     var ocrImage: NSImage?
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
@@ -28,16 +24,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         
         constructMenu()
-        
-        if let win = settingWinC.window {
-            win.title = NSLocalizedString("setting-window.title", comment: "设置窗口的标题：偏好设置")
-            win.minSize = NSSize(width: 420, height: 150)
-            win.maxSize = NSSize(width: 420, height: 150)
-            win.titlebarAppearsTransparent = true
-            win.styleMask.insert(NSWindow.StyleMask.fullSizeContentView)
-        }
-        
-        resultPopover.delegate = self
+        BaiduAI.share.updateAccessToken()
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -54,8 +41,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         helpMenu.addItem(withTitle: NSLocalizedString("menu-item-help-about.title", comment: "菜单栏帮助选项按钮标题：关于"), action: #selector(showAboutMe), keyEquivalent: "")
         
         menu.addItem(withTitle: NSLocalizedString("menu-item-capture-ocr.title", comment: "菜单栏截图识别按钮标题：截图识别"), action: #selector(screenshotAndOCR), keyEquivalent: "c")
-        menu.addItem(.separator())
-        menu.addItem(withTitle: NSLocalizedString("menu-item-preferences.title", comment: "菜单栏偏好设置按钮标题：偏好设置..."), action: #selector(preferencesWindow), keyEquivalent: ",")
         menu.addItem(.separator())
         menu.addItem(mainDropdown)
         menu.setSubmenu(helpMenu, for: mainDropdown)
@@ -78,11 +63,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             self.ocrImage = NSImage(data: imgData!)
             BaiduAI.share.ocr(imgData! as NSData, callback: self.ocrCallBack(result:error:))
         }
-    }
-    
-    @objc func preferencesWindow() {
-        settingWinC.window!.makeKeyAndOrderFront(self)
-        settingWinC.showWindow(self)
     }
     
     @objc func showAboutMe() {
@@ -117,12 +97,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         NSPasteboard.general.declareTypes([.string], owner: nil)
         NSPasteboard.general.setString(result!, forType: .string)
-        if let button = statusItem.button {
-            if resultPopover.isShown {
-                resultPopover.performClose(self)
-            }
-            resultPopover.show(relativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.minY)
-        }
     }
     
 }
@@ -166,17 +140,4 @@ extension AppDelegate: NSWindowDelegate, NSDraggingDestination {
         }
     }
 
-}
-
-extension AppDelegate: NSPopoverDelegate {
-    func popoverWillShow(_ notification: Notification) {
-        guard let popover = notification.object as? NSPopover  else {
-            return
-        }
-        guard let vc = popover.contentViewController as? ResultViewController else {
-            return
-        }
-        vc.targetImageView.image = self.ocrImage
-        vc.resultText = NSPasteboard.general.string(forType: .string)
-    }
 }

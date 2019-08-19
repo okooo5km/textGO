@@ -31,10 +31,11 @@ class BaiduAI {
     var baiduParams: [String: String]? {
         get {
             if UserDefaults.standard.dictionary(forKey: "baiduAIParams") == nil {
-                _baiduParams!["apiKey"] = ""
-                _baiduParams!["secretKey"] = ""
+                _baiduParams!["apiKey"] = "HGuY2oEGhPQAPC5VQrRIA40S"
+                _baiduParams!["secretKey"] = "L3SUNohBY5vnAndfkp8IKYtPwv5Td908"
                 _baiduParams!["accessToken"] = ""
                 UserDefaults.standard.set(_baiduParams, forKey: "baiduAIParams")
+                self.updateAccessToken()
             }
             return  (UserDefaults.standard.dictionary(forKey: "baiduAIParams") as? [String : String])
         }
