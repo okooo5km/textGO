@@ -10,7 +10,7 @@ import Cocoa
 
 class YoutuOCR {
     
-    static let share = YoutuOCR()
+    static let shared = YoutuOCR()
     
     enum Method {
         case general, hp
@@ -29,27 +29,42 @@ class YoutuOCR {
         }
     }
     
-    enum ErrorType: Int {
-        case accessTokenInvalid
-    }
-    
-    func ocr(_ imgData: NSData, callback: @escaping ((String?, (ErrorType, String)?) -> Void)) {
+    func ocr(_ imgData: NSData, callback: @escaping ((String?, String?) -> Void)) {
         let session = URLSession(configuration: .default)
-        let url = URL(string: Method.general.url)
+        let url = URL(string: Method.hp.url)
         var request = URLRequest(url: url!)
-        request.addValue("text/json", forHTTPHeaderField: "Content-Type")
-        request.addValue(Authorization.share.sign(), forHTTPHeaderField: "Authorization")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue(Authorization.shared.sign(), forHTTPHeaderField: "Authorization")
         request.httpMethod = "POST"
-        let postString = "{\"app_id\":\"\(Authorization.share.appID)\",\"image\":\"\(imgData.base64EncodedString())\"}"
+        let postString = "{\"app_id\":\"\(Authorization.shared.appID)\",\"image\":\"\(imgData.base64EncodedString())\"}"
         request.httpBody = postString.data(using: .utf8)
         let task = session.dataTask(with: request) {(data, response, error) in
             DispatchQueue.main.async {
-                do {
-                    let result = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
-                    print(result)
-                } catch {
-                    print(error.localizedDescription)
+                guard error == nil else {
+                    if let httpResponse = response as? HTTPURLResponse {
+                        callback(nil, YouTuError(code: httpResponse.statusCode).description)
+                    }
+                    return
                 }
+                
+                guard data != nil else {
+                    callback("", "数据空")
+                    return
+                }
+                
+                let result = try? JSONDecoder().decode(YouTuResult.self, from: data!)
+                guard result?.errorcode == 0 else {
+                    callback(nil, result?.errormsg)
+                    return
+                }
+                
+                var resultArray = [String]()
+                if let items = result?.items {
+                    for item in items {
+                        resultArray.append(item.itemstring)
+                    }
+                }
+                callback(resultArray.joined(separator: "\n"), nil)
             }
         }
         task.resume()
