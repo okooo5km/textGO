@@ -90,7 +90,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         TextGoUpdater.share.check() {}
     }
     
-    private func ocrCallBack(result: String?, error: (BaiduAI.ErrorType, String)?) {
+    private func ocrCallBack(result: String?, error: String?) {
         if let error = error {
             print(error)
             return

@@ -81,7 +81,7 @@ class BaiduAI {
         accessToken = ""
     }
     
-    func ocr(_ imgData: NSData, callback: @escaping ((String?, (ErrorType, String)?) -> Void)) {
+    func ocr(_ imgData: NSData, callback: @escaping ((String?, String?) -> Void)) {
         
         if accessToken == nil {
             return
@@ -103,7 +103,7 @@ class BaiduAI {
         task.resume()
     }
     
-    private func requestCompletionHandler(imgData: NSData, data: Data?, response: URLResponse?, error: Error?, callback: @escaping ((String?, (ErrorType, String)?) -> Void)) {
+    private func requestCompletionHandler(imgData: NSData, data: Data?, response: URLResponse?, error: Error?, callback: @escaping ((String?, String?) -> Void)) {
         DispatchQueue.main.async {
             do {
                 let r = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
@@ -121,7 +121,7 @@ class BaiduAI {
                         default:
                             print("")
                         }
-                        callback(nil, (errorType, r.value(forKey: "error_msg") as! String))
+                        callback(nil, (r.value(forKey: "error_msg") as! String))
                     } else {
                         print(r)
                     }
@@ -135,11 +135,11 @@ class BaiduAI {
                         let wordsStr = wordsArray.joined(separator: "\n")
                         callback(wordsStr, nil)
                     } else {
-                        callback(nil, (ErrorType.resultEmpty, r.value(forKey: "result is empty") as! String))
+                        callback(nil, "result is empty")
                     }
                 }
             } catch {
-                callback(nil, (ErrorType.connectInvalid, "can not connect to server"))
+                callback(nil, "can not connect to server")
                 return
             }
         }
