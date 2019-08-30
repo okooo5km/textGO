@@ -13,24 +13,35 @@ class BaiduAI {
     
     static let share = BaiduAI()
     
-    enum OcrUrl: String {
-        case basic = "https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic?access_token="
-        case accurate = "https://aip.baidubce.com/rest/2.0/ocr/v1/accurate?access_token="
+    enum OCRMethod: String {
+        case general_basic, accurate
+        
+        func url(withAccessToken accessToken: String) -> String {
+            var result = ""
+            switch self {
+            case .general_basic:
+                result = "https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic?access_token=\(accessToken)"
+            default:
+                result = "https://aip.baidubce.com/rest/2.0/ocr/v1/accurate?access_token=\(accessToken)"
+            }
+            return result
+        }
+        
     }
     
     private var tryCount: Int = 0
-    private var ocrUrl = OcrUrl.accurate
+    private var method: OCRMethod = .accurate
     
     func ocr(_ imgData: NSData, callback: @escaping ((String?, String?) -> Void)) {
         
-        let accessToken = BaiduAccessToken.shared.value
-        
-        if accessToken == nil {
+        guard let accessToken = BaiduAccessToken.shared.value else {
+            callback(nil, "BaiduAI: AccessToken 空")
+            BaiduAccessToken.shared.update()
             return
         }
         
         let session = URLSession(configuration: .default)
-        let url = URL(string: "\(ocrUrl.rawValue)\(accessToken ?? "")")
+        let url = URL(string: method.url(withAccessToken: accessToken))
         var request = URLRequest(url: url!)
         request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
@@ -49,15 +60,20 @@ class BaiduAI {
                 }
                 
                 guard data != nil else {
-                    callback("", "数据空")
+                    callback("", "BaiduAI: 数据空")
                     return
                 }
                 
                 if let err = try? JSONDecoder().decode(BaiduError.self, from: data!) {
-                    if err.error_code == 111 {
+                    switch err.error_code {
+                    case 17:    //  每日超量
+                        self.method = .general_basic
+                        self.ocr(imgData, callback: callback)
+                    case 111:   //  accesstoken 过期
                         BaiduAccessToken.shared.update()
+                    default:
+                        callback(nil, "BaiduAI: " + err.error_msg)
                     }
-                    callback(nil, err.error_msg)
                 } else {
                     let result = try? JSONDecoder().decode(BaiduResult.self, from: data!)
                     var resultArray = [String]()
