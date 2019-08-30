@@ -10,7 +10,7 @@
 		6B21FDEB222A0E4A007A5220 /* TextGoUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B21FDEA222A0E4A007A5220 /* TextGoUpdater.swift */; };
 		6B4952FC222220BC0067596F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6B4952FE222220BC0067596F /* InfoPlist.strings */; };
 		6B49531222222FE60067596F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6B49531422222FE60067596F /* Localizable.strings */; };
-		6B7D44B22315334F0040407E /* OCR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7D44B12315334F0040407E /* OCR.swift */; };
+		6B7D44B22315334F0040407E /* YoutuOCR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7D44B12315334F0040407E /* YoutuOCR.swift */; };
 		6BA9678921F22CF000DE5331 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA9678821F22CF000DE5331 /* AppDelegate.swift */; };
 		6BA9678B21F22CF100DE5331 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BA9678A21F22CF100DE5331 /* Assets.xcassets */; };
 		6BA9678E21F22CF100DE5331 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6BA9678C21F22CF100DE5331 /* MainMenu.xib */; };
@@ -19,9 +19,9 @@
 		6BA967B921F356C000DE5331 /* NSDragingInfoExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA967B821F356C000DE5331 /* NSDragingInfoExt.swift */; };
 		6BA967BD21F4383900DE5331 /* BaiduAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA967BC21F4383900DE5331 /* BaiduAI.swift */; };
 		6BC33F2121F6D81200C5DAFD /* TextGoPublic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC33F2021F6D81200C5DAFD /* TextGoPublic.swift */; };
-		6BFE63512316CBC000B98D5E /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BFE63502316CBC000B98D5E /* Models.swift */; };
-		6BFE63532316CC1400B98D5E /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BFE63522316CC1400B98D5E /* Auth.swift */; };
-		6BFE63552316E85200B98D5E /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BFE63542316E85200B98D5E /* Error.swift */; };
+		6BFE63512316CBC000B98D5E /* YoutuModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BFE63502316CBC000B98D5E /* YoutuModels.swift */; };
+		6BFE63532316CC1400B98D5E /* YoutuAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BFE63522316CC1400B98D5E /* YoutuAuth.swift */; };
+		6BFE63552316E85200B98D5E /* YoutuError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BFE63542316E85200B98D5E /* YoutuError.swift */; };
 		6BFE63572317DE6900B98D5E /* TextGoSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BFE63562317DE6900B98D5E /* TextGoSettings.swift */; };
 /* End PBXBuildFile section */
 
@@ -59,7 +59,7 @@
 		6B49531622222FEB0067596F /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		6B49531722222FEC0067596F /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6B49531822222FED0067596F /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
-		6B7D44B12315334F0040407E /* OCR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCR.swift; sourceTree = "<group>"; };
+		6B7D44B12315334F0040407E /* YoutuOCR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutuOCR.swift; sourceTree = "<group>"; };
 		6BA9678521F22CF000DE5331 /* textGO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = textGO.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BA9678821F22CF000DE5331 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6BA9678A21F22CF100DE5331 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -75,9 +75,9 @@
 		6BA967B821F356C000DE5331 /* NSDragingInfoExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSDragingInfoExt.swift; sourceTree = "<group>"; };
 		6BA967BC21F4383900DE5331 /* BaiduAI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaiduAI.swift; sourceTree = "<group>"; };
 		6BC33F2021F6D81200C5DAFD /* TextGoPublic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextGoPublic.swift; sourceTree = "<group>"; };
-		6BFE63502316CBC000B98D5E /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
-		6BFE63522316CC1400B98D5E /* Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
-		6BFE63542316E85200B98D5E /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		6BFE63502316CBC000B98D5E /* YoutuModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutuModels.swift; sourceTree = "<group>"; };
+		6BFE63522316CC1400B98D5E /* YoutuAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutuAuth.swift; sourceTree = "<group>"; };
+		6BFE63542316E85200B98D5E /* YoutuError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutuError.swift; sourceTree = "<group>"; };
 		6BFE63562317DE6900B98D5E /* TextGoSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextGoSettings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -130,9 +130,9 @@
 			isa = PBXGroup;
 			children = (
 				6BFE634F2316CB8F00B98D5E /* TencentYoutuOCR */,
+				6BA967BC21F4383900DE5331 /* BaiduAI.swift */,
 				6BA9678F21F22CF100DE5331 /* Info.plist */,
 				6BA9678821F22CF000DE5331 /* AppDelegate.swift */,
-				6BA967BC21F4383900DE5331 /* BaiduAI.swift */,
 				6BC33F2021F6D81200C5DAFD /* TextGoPublic.swift */,
 				6B21FDEA222A0E4A007A5220 /* TextGoUpdater.swift */,
 				6BFE63562317DE6900B98D5E /* TextGoSettings.swift */,
@@ -167,10 +167,10 @@
 		6BFE634F2316CB8F00B98D5E /* TencentYoutuOCR */ = {
 			isa = PBXGroup;
 			children = (
-				6B7D44B12315334F0040407E /* OCR.swift */,
-				6BFE63502316CBC000B98D5E /* Models.swift */,
-				6BFE63522316CC1400B98D5E /* Auth.swift */,
-				6BFE63542316E85200B98D5E /* Error.swift */,
+				6B7D44B12315334F0040407E /* YoutuOCR.swift */,
+				6BFE63502316CBC000B98D5E /* YoutuModels.swift */,
+				6BFE63522316CC1400B98D5E /* YoutuAuth.swift */,
+				6BFE63542316E85200B98D5E /* YoutuError.swift */,
 			);
 			path = TencentYoutuOCR;
 			sourceTree = "<group>";
@@ -341,15 +341,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6BFE63512316CBC000B98D5E /* Models.swift in Sources */,
+				6BFE63512316CBC000B98D5E /* YoutuModels.swift in Sources */,
 				6B21FDEB222A0E4A007A5220 /* TextGoUpdater.swift in Sources */,
-				6B7D44B22315334F0040407E /* OCR.swift in Sources */,
+				6B7D44B22315334F0040407E /* YoutuOCR.swift in Sources */,
 				6BA9678921F22CF000DE5331 /* AppDelegate.swift in Sources */,
 				6BA967B921F356C000DE5331 /* NSDragingInfoExt.swift in Sources */,
 				6BC33F2121F6D81200C5DAFD /* TextGoPublic.swift in Sources */,
 				6BA967BD21F4383900DE5331 /* BaiduAI.swift in Sources */,
-				6BFE63552316E85200B98D5E /* Error.swift in Sources */,
-				6BFE63532316CC1400B98D5E /* Auth.swift in Sources */,
+				6BFE63552316E85200B98D5E /* YoutuError.swift in Sources */,
+				6BFE63532316CC1400B98D5E /* YoutuAuth.swift in Sources */,
 				6BFE63572317DE6900B98D5E /* TextGoSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

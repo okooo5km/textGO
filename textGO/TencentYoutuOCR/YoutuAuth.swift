@@ -9,13 +9,13 @@
 import Cocoa
 import CommonCrypto
 
-class Authorization {
+class YoutuAuth {
     var appID: String
     private var qq: String
     private var secretID:String
     private var secretKey: String
     
-    static let shared = Authorization(qq: "1206407149",
+    static let shared = YoutuAuth(qq: "1206407149",
                                      appID: "10187428",
                                      secretID: "AKIDmRhBVlEkaoq1efu7irq84JC0M2V0vdDo",
                                      secretKey: "bSzTKF8SmvqfjdyMtO3XXuTlIk1Q3Yo0")

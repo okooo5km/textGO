@@ -34,9 +34,9 @@ class YoutuOCR {
         let url = URL(string: Method.hp.url)
         var request = URLRequest(url: url!)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue(Authorization.shared.sign(), forHTTPHeaderField: "Authorization")
+        request.addValue(YoutuAuth.shared.sign(), forHTTPHeaderField: "Authorization")
         request.httpMethod = "POST"
-        let postString = "{\"app_id\":\"\(Authorization.shared.appID)\",\"image\":\"\(imgData.base64EncodedString())\"}"
+        let postString = "{\"app_id\":\"\(YoutuAuth.shared.appID)\",\"image\":\"\(imgData.base64EncodedString())\"}"
         request.httpBody = postString.data(using: .utf8)
         let task = session.dataTask(with: request) {(data, response, error) in
             DispatchQueue.main.async {
