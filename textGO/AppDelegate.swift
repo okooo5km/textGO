@@ -34,7 +34,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         constructMenu()
         if settings?.service == OCRService.baidu {
-            BaiduAI.share.updateAccessToken()
+            BaiduAccessToken.shared.update()
         }
     }
 
@@ -144,8 +144,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             print(error)
             return
         }
-        NSPasteboard.general.declareTypes([.string], owner: nil)
-        NSPasteboard.general.setString(result!, forType: .string)
+        
+        if let result = result {
+            NSPasteboard.general.declareTypes([.string], owner: nil)
+            NSPasteboard.general.setString(result, forType: .string)
+        }
     }
     
 }

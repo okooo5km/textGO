@@ -17,8 +17,11 @@
 		6BA9679A21F22CF200DE5331 /* textGOTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA9679921F22CF200DE5331 /* textGOTests.swift */; };
 		6BA967A521F22CF200DE5331 /* textGOUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA967A421F22CF200DE5331 /* textGOUITests.swift */; };
 		6BA967B921F356C000DE5331 /* NSDragingInfoExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA967B821F356C000DE5331 /* NSDragingInfoExt.swift */; };
-		6BA967BD21F4383900DE5331 /* BaiduAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA967BC21F4383900DE5331 /* BaiduAI.swift */; };
+		6BA967BD21F4383900DE5331 /* BaiduOCR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA967BC21F4383900DE5331 /* BaiduOCR.swift */; };
 		6BC33F2121F6D81200C5DAFD /* TextGoPublic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC33F2021F6D81200C5DAFD /* TextGoPublic.swift */; };
+		6BF81AFC2318C95900956C3E /* BaiduModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF81AFB2318C95900956C3E /* BaiduModels.swift */; };
+		6BF81AFE2318CB7700956C3E /* BaiduError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF81AFD2318CB7700956C3E /* BaiduError.swift */; };
+		6BF81B002319230300956C3E /* BaiduAccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF81AFF2319230300956C3E /* BaiduAccessToken.swift */; };
 		6BFE63512316CBC000B98D5E /* YoutuModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BFE63502316CBC000B98D5E /* YoutuModels.swift */; };
 		6BFE63532316CC1400B98D5E /* YoutuAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BFE63522316CC1400B98D5E /* YoutuAuth.swift */; };
 		6BFE63552316E85200B98D5E /* YoutuError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BFE63542316E85200B98D5E /* YoutuError.swift */; };
@@ -73,8 +76,11 @@
 		6BA967A421F22CF200DE5331 /* textGOUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = textGOUITests.swift; sourceTree = "<group>"; };
 		6BA967A621F22CF200DE5331 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6BA967B821F356C000DE5331 /* NSDragingInfoExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSDragingInfoExt.swift; sourceTree = "<group>"; };
-		6BA967BC21F4383900DE5331 /* BaiduAI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaiduAI.swift; sourceTree = "<group>"; };
+		6BA967BC21F4383900DE5331 /* BaiduOCR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaiduOCR.swift; sourceTree = "<group>"; };
 		6BC33F2021F6D81200C5DAFD /* TextGoPublic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextGoPublic.swift; sourceTree = "<group>"; };
+		6BF81AFB2318C95900956C3E /* BaiduModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaiduModels.swift; sourceTree = "<group>"; };
+		6BF81AFD2318CB7700956C3E /* BaiduError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaiduError.swift; sourceTree = "<group>"; };
+		6BF81AFF2319230300956C3E /* BaiduAccessToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaiduAccessToken.swift; sourceTree = "<group>"; };
 		6BFE63502316CBC000B98D5E /* YoutuModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutuModels.swift; sourceTree = "<group>"; };
 		6BFE63522316CC1400B98D5E /* YoutuAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutuAuth.swift; sourceTree = "<group>"; };
 		6BFE63542316E85200B98D5E /* YoutuError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutuError.swift; sourceTree = "<group>"; };
@@ -129,8 +135,8 @@
 		6BA9678721F22CF000DE5331 /* textGO */ = {
 			isa = PBXGroup;
 			children = (
+				6BF81AFA2318C62B00956C3E /* BaiduOCR */,
 				6BFE634F2316CB8F00B98D5E /* TencentYoutuOCR */,
-				6BA967BC21F4383900DE5331 /* BaiduAI.swift */,
 				6BA9678F21F22CF100DE5331 /* Info.plist */,
 				6BA9678821F22CF000DE5331 /* AppDelegate.swift */,
 				6BC33F2021F6D81200C5DAFD /* TextGoPublic.swift */,
@@ -162,6 +168,17 @@
 				6BA967A621F22CF200DE5331 /* Info.plist */,
 			);
 			path = textGOUITests;
+			sourceTree = "<group>";
+		};
+		6BF81AFA2318C62B00956C3E /* BaiduOCR */ = {
+			isa = PBXGroup;
+			children = (
+				6BA967BC21F4383900DE5331 /* BaiduOCR.swift */,
+				6BF81AFD2318CB7700956C3E /* BaiduError.swift */,
+				6BF81AFB2318C95900956C3E /* BaiduModels.swift */,
+				6BF81AFF2319230300956C3E /* BaiduAccessToken.swift */,
+			);
+			path = BaiduOCR;
 			sourceTree = "<group>";
 		};
 		6BFE634F2316CB8F00B98D5E /* TencentYoutuOCR */ = {
@@ -347,9 +364,12 @@
 				6BA9678921F22CF000DE5331 /* AppDelegate.swift in Sources */,
 				6BA967B921F356C000DE5331 /* NSDragingInfoExt.swift in Sources */,
 				6BC33F2121F6D81200C5DAFD /* TextGoPublic.swift in Sources */,
-				6BA967BD21F4383900DE5331 /* BaiduAI.swift in Sources */,
+				6BF81AFE2318CB7700956C3E /* BaiduError.swift in Sources */,
+				6BF81B002319230300956C3E /* BaiduAccessToken.swift in Sources */,
+				6BA967BD21F4383900DE5331 /* BaiduOCR.swift in Sources */,
 				6BFE63552316E85200B98D5E /* YoutuError.swift in Sources */,
 				6BFE63532316CC1400B98D5E /* YoutuAuth.swift in Sources */,
+				6BF81AFC2318C95900956C3E /* BaiduModels.swift in Sources */,
 				6BFE63572317DE6900B98D5E /* TextGoSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
