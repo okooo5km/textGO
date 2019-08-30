@@ -64,3 +64,6 @@
 
 /* 菜单栏检查更新按钮标题：检查更新 */
 "menu-item-check-update.title" = "Check for updates";
+
+/* 菜单栏OCR服务选择按钮标题：识别服务 */
+"menu-item-service.title" = "Select OCR Service";
