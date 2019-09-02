@@ -22,6 +22,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             button.image = NSImage(named: "statusIcon")
             button.window?.delegate = self
             button.window?.registerForDraggedTypes([NSPasteboard.PasteboardType("NSFilenamesPboardType")])
+            button.action = #selector(mouseClickedHandler)
+            button.sendAction(on: [.leftMouseUp, .rightMouseUp])
         }
         
         // 加载设置，必须放在 Menu 构建前面
@@ -32,7 +34,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             settings?.save()
         }
         
-        constructMenu()
         if settings?.service == OCRService.baidu {
             BaiduAccessToken.shared.update()
         }
@@ -42,12 +43,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Insert code here to tear down your application
     }
     
-    func constructMenu() {
+    func constructMenu() -> NSMenu {
         let menu = NSMenu()
         let helpMenu = NSMenu()
         let serviceMenu = NSMenu()
         let helpDropdown = NSMenuItem(title: NSLocalizedString("menu-item-help.title", comment: "菜单栏帮助选项按钮标题：帮助选项"), action: nil, keyEquivalent: "")
         let serviceDropdown = NSMenuItem(title: NSLocalizedString("menu-item-service.title", comment: "菜单栏OCR服务选择按钮标题：识别服务"), action: nil, keyEquivalent: "")
+        
+        menu.delegate = self
         
         helpMenu.addItem(withTitle: NSLocalizedString("menu-item-help-tutorial.title", comment: "菜单栏帮助选项按钮标题：教程"), action: #selector(howToUse), keyEquivalent: "")
         helpMenu.addItem(withTitle: NSLocalizedString("menu-item-help-feedback.title", comment: "菜单栏帮助选项按钮标题：反馈"), action: #selector(feedbackApp), keyEquivalent: "")
@@ -71,7 +74,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItem(withTitle: NSLocalizedString("menu-item-check-update.title", comment: "菜单栏检查更新按钮标题：检查更新"), action: #selector(checkUpdate), keyEquivalent: "u")
         menu.addItem(.separator())
         menu.addItem(withTitle: NSLocalizedString("menu-item-quit.title", comment: "菜单栏退出按钮标题：退出 文析"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
-        statusItem.menu = menu
+        
+        return menu
+    }
+    
+    @objc func mouseClickedHandler() {
+        if let event = NSApp.currentEvent {
+            switch event.type {
+            case .leftMouseUp:
+                screenshotAndOCR()
+            default:
+                statusItem.menu = constructMenu()
+                statusItem.button?.performClick(nil)
+            }
+        }
     }
     
     @objc func screenshotAndOCR() {
@@ -203,4 +219,11 @@ extension AppDelegate: NSWindowDelegate, NSDraggingDestination {
         }
     }
 
+}
+
+extension AppDelegate: NSMenuDelegate {
+    // 为了保证按钮的单击时间设置有效，menu要去除
+    func menuDidClose(_ menu: NSMenu) {
+        self.statusItem.menu = nil
+    }
 }
