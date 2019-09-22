@@ -30,6 +30,17 @@ enum OCRService: Int, Codable, CaseIterable {
         }
         return result
     }
+    
+    var tag: String {
+        var result = ""
+        switch self {
+        case .youtu:
+            result = "youtu"
+        default:
+            result = "baidu"
+        }
+        return result
+    }
 }
 
 struct TextGoSettings: Codable {

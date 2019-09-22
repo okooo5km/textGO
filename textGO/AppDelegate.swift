@@ -52,28 +52,44 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         menu.delegate = self
         
-        helpMenu.addItem(withTitle: NSLocalizedString("menu-item-help-tutorial.title", comment: "菜单栏帮助选项按钮标题：教程"), action: #selector(howToUse), keyEquivalent: "")
-        helpMenu.addItem(withTitle: NSLocalizedString("menu-item-help-feedback.title", comment: "菜单栏帮助选项按钮标题：反馈"), action: #selector(feedbackApp), keyEquivalent: "")
-        helpMenu.addItem(withTitle: NSLocalizedString("menu-item-help-about.title", comment: "菜单栏帮助选项按钮标题：关于"), action: #selector(showAboutMe), keyEquivalent: "")
+        helpDropdown.image = NSImage(named: "help")
+        serviceDropdown.image = NSImage(named: "services")
+        
+        let tutorialItem = NSMenuItem(title: NSLocalizedString("menu-item-help-tutorial.title", comment: "菜单栏帮助选项按钮标题：教程"), action: #selector(howToUse), keyEquivalent: "")
+        tutorialItem.image = NSImage(named: "tutorial")
+        helpMenu.addItem(tutorialItem)
+        let feedbackItem = NSMenuItem(title: NSLocalizedString("menu-item-help-feedback.title", comment: "菜单栏帮助选项按钮标题：反馈"), action: #selector(feedbackApp), keyEquivalent: "")
+        feedbackItem.image = NSImage(named: "feedback")
+        helpMenu.addItem(feedbackItem)
+        let aboutItem = NSMenuItem(title: NSLocalizedString("menu-item-help-about.title", comment: "菜单栏帮助选项按钮标题：关于"), action: #selector(showAboutMe), keyEquivalent: "")
+        aboutItem.image = NSImage(named: "about")
+        helpMenu.addItem(aboutItem)
         
         for item in OCRService.allCases {
             let menuItem = NSMenuItem(title: item.title, action: #selector(selectService(sender:)), keyEquivalent: "")
+            menuItem.image = NSImage(named: item.tag)
             if item == settings?.service {
                 menuItem.state = .on
             }
             serviceMenu.addItem(menuItem)
         }
         
-        menu.addItem(withTitle: NSLocalizedString("menu-item-capture-ocr.title", comment: "菜单栏截图识别按钮标题：截图识别"), action: #selector(screenshotAndOCR), keyEquivalent: "c")
+        let screenshotItem = NSMenuItem(title: NSLocalizedString("menu-item-capture-ocr.title", comment: "菜单栏截图识别按钮标题：截图识别"), action: #selector(screenshotAndOCR), keyEquivalent: "c")
+        screenshotItem.image = NSImage(named: "screenshot")
+        menu.addItem(screenshotItem)
         menu.addItem(.separator())
         menu.addItem(serviceDropdown)
         menu.setSubmenu(serviceMenu, for: serviceDropdown)
         menu.addItem(.separator())
         menu.addItem(helpDropdown)
         menu.setSubmenu(helpMenu, for: helpDropdown)
-        menu.addItem(withTitle: NSLocalizedString("menu-item-check-update.title", comment: "菜单栏检查更新按钮标题：检查更新"), action: #selector(checkUpdate), keyEquivalent: "u")
+        let updateItem = NSMenuItem(title: NSLocalizedString("menu-item-check-update.title", comment: "菜单栏检查更新按钮标题：检查更新"), action: #selector(checkUpdate), keyEquivalent: "u")
+        updateItem.image = NSImage(named: "update")
+        menu.addItem(updateItem)
         menu.addItem(.separator())
-        menu.addItem(withTitle: NSLocalizedString("menu-item-quit.title", comment: "菜单栏退出按钮标题：退出 文析"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+        let quitItem = NSMenuItem(title: NSLocalizedString("menu-item-quit.title", comment: "菜单栏退出按钮标题：退出 文析"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+        quitItem.image = NSImage(named: "quit")
+        menu.addItem(quitItem)
         
         return menu
     }
